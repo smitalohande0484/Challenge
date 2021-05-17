@@ -228,18 +228,32 @@ END;
 Employee.	
 
 
-			CREATE OR REPLACE PROCEDURE UPDDEPT
+			CREATE OR REPLACE FUNCTION RETSAL
 					(
-					 e_id  IN OUT    EMP.EMPID%TYPE,
-					 e_sal OUT NUMBER(10)
+					 e_id  IN  EMP.EMPID%TYPE
 					 )
-			AS
-			
+			RETURN NUMBER AS
+			sal number(10);
 			BEGIN
-				SELECT SAL,EMPID INTO e_sal,e_id FROM EMP where EMPID = e_id;
+				SELECT SAL INTO sal FROM EMP where EMPID = e_id;
+        		return sal;
 			END;
 			
-			
+	DECLARE
+  E_ID NUMBER;
+  v_Return NUMBER;
+BEGIN
+  E_ID := 90011;
+
+  v_Return := RETSAL(
+    E_ID => E_ID
+  );
+   --Legacy output: 
+DBMS_OUTPUT.PUT_LINE('v_Return = ' || v_Return);
+
+  --:v_Return := v_Return;
+END;
+		
 			
 
 			
